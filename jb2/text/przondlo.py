@@ -2,6 +2,7 @@ import random
 import discord
 
 from jb2.bot import bot
+from jb2.embed import error_embed
 
 def przondling(text):
     przondling_factor = 0.3
