@@ -4,6 +4,7 @@ import logging
 
 from jb2.bot import bot
 from jb2.text.elo import elo
+from jb2.text.gejowo import gejowo
 from jb2.text.przondlo import przondlo
 
 logging.basicConfig(
