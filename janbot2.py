@@ -27,6 +27,8 @@ async def on_message_delete(message):
         return
     if message.channel.id == log_channel_id:
         return
+    if message.author.bot:
+        return
 
     channel = bot.get_channel(log_channel_id)
 
@@ -43,11 +45,13 @@ async def on_message_edit(before, after):
         return
     if before.channel.id == log_channel_id:
         return
+    if before.author.bot:
+        return
 
     channel = bot.get_channel(log_channel_id)
 
     emb = discord.Embed(title="{} zedytował wiadomość".format(before.author))
-    emb.description = "[{}#{}]\nPrzed:\n{}\n\nPo:\n{}".format(
+    emb.description = "[{}#{}]\n**Przed**:\n{}\n\n**Po**:\n{}".format(
         before.guild.name,
         before.channel.name, 
         before.content,
