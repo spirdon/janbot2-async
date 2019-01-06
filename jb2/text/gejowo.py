@@ -38,5 +38,3 @@ async def gejowo(ctx):
     emb.set_footer(text=footer_text, icon_url=ctx.author.avatar_url)
 
     await ctx.send(embed=emb)
-
-    
