@@ -31,9 +31,9 @@ async def gejowo(ctx):
     emoji = ':rainbow:'
 
     title = emoji + " Gejowski anons"
-
     footer_text = "Gejowski anons dla " + str(ctx.author)
     text = random_ad()
+    
     emb = discord.Embed(title=title, description=text, color=0xff9999)
     emb.set_footer(text=footer_text, icon_url=ctx.author.avatar_url)
 

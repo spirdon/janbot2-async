@@ -63,10 +63,13 @@ def przondling(text):
 
 @bot.command()
 async def przondlo(ctx, *args):
-    emoji = ':bee:'
-    answer = przondling(' '.join(args))
+    if len(args) < 1:
+        emb = error_embed(ctx.author.mention, "Podaj tekst do przondłowania.")
+    else:       
+        emoji = ':bee:'
+        answer = przondling(' '.join(args))
 
-    text = '{} {}: {}'.format(emoji, ctx.author.mention, answer)
-    emb = discord.Embed(description=text, color=0xff7777)
+        text = '{} {}: {}'.format(emoji, ctx.author.mention, answer)
+        emb = discord.Embed(description=text, color=0xff7777)
     
     await ctx.send(embed=emb)
