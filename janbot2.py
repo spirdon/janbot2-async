@@ -4,6 +4,7 @@ import logging
 
 from jb2.bot import bot
 from jb2.text.elo import elo
+from jb2.text.przondlo import przondlo
 
 logging.basicConfig(
     level='DEBUG', format='%(asctime)s - %(name)s - %(levelname)s: %(message)s')

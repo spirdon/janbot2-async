@@ -10,11 +10,11 @@ with open('res/text/elo.txt') as file:
 @bot.command()
 async def elo(ctx):
     global greetings
-    
+
     emoji = ':wave:'
     answer = random.choice(greetings)
 
     text = '{} {}: {}'.format(emoji, ctx.author.mention, answer)
-    emb = discord.Embed(description=text, color=0xffffaa)
+    emb = discord.Embed(description=text, color=0xffff77)
     
     await ctx.send(embed=emb)
