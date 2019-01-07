@@ -1,6 +1,7 @@
 import asyncio
 import os
 import logging
+import datetime
 import discord
 
 from jb2.bot import bot
@@ -32,7 +33,8 @@ async def on_message_delete(message):
 
     channel = bot.get_channel(log_channel_id)
 
-    emb = discord.Embed(title="{} usunięto wiadomość".format(message.author))
+    emb = discord.Embed(title="{} usunięto wiadomość".format(message.author),
+                        timestamp=datetime.datetime.now())
     emb.description = "[{}#{}] {}".format(message.guild.name, 
                                           message.channel.name, 
                                           message.content)
@@ -47,10 +49,13 @@ async def on_message_edit(before, after):
         return
     if before.author.bot:
         return
+    if before.content == after.content:
+        return
 
     channel = bot.get_channel(log_channel_id)
 
-    emb = discord.Embed(title="{} zedytował wiadomość".format(before.author))
+    emb = discord.Embed(title="{} zedytował wiadomość".format(before.author),
+                        timestamp=datetime.datetime.now())
     emb.description = "[{}#{}]\n**Przed**:\n{}\n\n**Po**:\n{}".format(
         before.guild.name,
         before.channel.name, 
