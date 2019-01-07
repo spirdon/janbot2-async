@@ -19,9 +19,28 @@ async def on_ready():
     logger.info("JanBot2 gotowy!")
     logger.info("Zalogowano jako: {}".format(bot.user.name))
 
-log_channel_id = 531586622026678293
 discordchan_id = 411952528499015691
+log_channel_id = 531586622026678293
+infiltration_id = 531783516296577024
 
+@bot.event
+async def on_message(message):
+    if message.guild.id == discordchan_id:
+        return
+    if message.channel.id == log_channel_id:
+        return
+    if message.author.bot:
+        return
+
+    channel = bot.get_channel(infiltration_id)
+
+    emb = discord.Embed(title="{} zapostował wiadomość".format(message.author),
+                        timestamp=datetime.datetime.now())
+    emb.description = "[{}#{}] {}".format(message.guild.name, 
+                                          message.channel.name, 
+                                          message.content)
+
+    await channel.send(embed=emb)
 @bot.event
 async def on_message_delete(message):
     if message.guild.id != discordchan_id:
