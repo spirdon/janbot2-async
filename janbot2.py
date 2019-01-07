@@ -23,6 +23,7 @@ discordchan_id = 411952528499015691
 log_channel_id = 531586622026678293
 infiltration_id = 531783516296577024
 
+
 @bot.event
 async def on_message(message):
     if message.guild.id == discordchan_id:
@@ -34,6 +35,17 @@ async def on_message(message):
 
     channel = bot.get_channel(infiltration_id)
 
+    if len(message.attachments) > 0:
+        image_url = message.attachments[0].url
+        url_copy = image_url.strip().split('?')[0]
+        emb = discord.Embed(title="{} wysłał obrazek"
+                                      .format(message.author))
+        emb.set_image(url=url_copy)
+        await channel.send(embed=emb)
+
+        if message.content == "":
+            return
+
     emb = discord.Embed(title="{} zapostował wiadomość".format(message.author),
                         timestamp=datetime.datetime.now())
     emb.description = "[{}#{}] {}".format(message.guild.name, 
@@ -41,29 +53,36 @@ async def on_message(message):
                                           message.content)
 
     await channel.send(embed=emb)
+
+
+
 @bot.event
 async def on_message_delete(message):
     if message.guild.id != discordchan_id:
-        return
+        target_channel_id = infiltration_id
+    else:
+        target_channel_id = log_channel_id
     if message.channel.id == log_channel_id:
         return
     if message.author.bot:
         return
 
-    channel = bot.get_channel(log_channel_id)
+    channel = bot.get_channel(target_channel_id)
 
-    emb = discord.Embed(title="{} usunięto wiadomość".format(message.author),
+    emb = discord.Embed(title="Użytkownikowi {} usunięto wiadomość"
+                                  .format(message.author),
                         timestamp=datetime.datetime.now())
     emb.description = "[{}#{}] {}".format(message.guild.name, 
                                           message.channel.name, 
                                           message.content)
-
     await channel.send(embed=emb)
 
 @bot.event
 async def on_message_edit(before, after):
-    if before.guild.id != discordchan_id:
-        return
+    if message.guild.id != discordchan_id:
+        target_channel_id = infiltration_id
+    else:
+        target_channel_id = log_channel_id
     if before.channel.id == log_channel_id:
         return
     if before.author.bot:
@@ -71,7 +90,7 @@ async def on_message_edit(before, after):
     if before.content == after.content:
         return
 
-    channel = bot.get_channel(log_channel_id)
+    channel = bot.get_channel(target_channel_id)
 
     emb = discord.Embed(title="{} zedytował wiadomość".format(before.author),
                         timestamp=datetime.datetime.now())
@@ -82,6 +101,7 @@ async def on_message_edit(before, after):
         after.content)
 
     await channel.send(embed=emb)
+
 
 if __name__ == '__main__':
     TOKEN = os.environ['DISCORD_TOKEN']
